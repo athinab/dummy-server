@@ -1,0 +1,13 @@
+{
+  "donations": [
+    {
+      "id": 1,
+      "type": "kalupsi"
+    }
+  ],
+  "profile": {
+    "id": 1510,
+    "first_name": "John",
+    "last_name": "Doe"
+  }
+}

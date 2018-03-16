@@ -13,10 +13,20 @@ function generateDB () {
       collectedComponents = [
         'Blood',
         'Platelets'
-      ];
+      ],
+      municipalities = [];
 
   for (var i = 0; i < 50; i++) {
     var id = i * 100 + 11;
+
+    var municipalityName = faker.address.city(),
+        municipalityID = id,
+        regionID = Math.floor(Math.random() * 13) + 1;
+    var municipality = {
+        name: municipalityName,
+        id: municipalityID,
+        region_id: regionID
+    };
 
     var donatedAt = faker.date.past(10).toISOString().slice(0, 10),
     // var donatedAt = "lalalallalalala".slice(0,10),
@@ -67,6 +77,7 @@ function generateDB () {
     donations.push(donation);
     coverages.push(coverage);
     hospitals.push(hospital);
+    municipalities.push(municipality);
   };
 
 
@@ -86,12 +97,69 @@ function generateDB () {
     firstName: faker.name.firstName()
   };
 
+  var regions = [
+    {
+      "id":1,
+      "name":"AN. MAKEDONIAS & THRAKIS"
+    },
+    {
+      "id":2,
+      "name":"KENTRIKIS MAKEDONIAS"
+    },
+    {
+      "id":3,
+      "name":"DYTIKIS MAKEDONIAS"
+    },
+    {
+      "id":4,
+      "name":"IPEIROU"
+    },
+    {
+      "id":5,
+      "name":"THESSALIAS"
+    },
+    {
+      "id":6,
+      "name":"IONION NISON"
+    },
+    {
+      "id":7,
+      "name":"DYTIKIS ELLADAS"
+    },
+    {
+      "id":8,
+      "name":"STEREAS ELLADAS"
+    },
+    {
+      "id":9,
+      "name":"ATTIKIS"
+    },
+    {
+      "id":10,
+      "name":"PELOPONNISOU"
+    },
+    {
+      "id":11,
+      "name":"VOREIOU AIGAIOU"
+    },
+    {
+      "id":12,
+      "name":"NOTIOU AIGAIOU"
+    },
+    {
+      "id":13,
+      "name":"KRITIS"
+    }
+  ];
+
   return {
     "donations": donations,
     "profile": profile,
     "hospitals": hospitals,
     "coverages": coverages,
-    "config": config
+    "config": config,
+    "regions": regions,
+    "municipalities": municipalities
   };
 };
 

@@ -32,8 +32,8 @@ function generateDB () {
     // var donatedAt = "lalalallalalala".slice(0,10),
         donationIndex = Math.floor(Math.random() * 4),
         donationType = donationTypes[donationIndex],
-        donationID = 'donation_' + id,
-        coverageID = 'kalipsi_' + id,
+        donationID = id * 13,
+        coverageID = id * 7,
         collectedComponent = collectedComponents[Math.floor(Math.random() * 2)];
         // collectedComponent = collectedComponents[0];
 
@@ -50,7 +50,7 @@ function generateDB () {
     }
 
     donatedAt = dd+'/'+mm+'/'+yyyy;
-    var hospitalID = 'hospital_' + id,
+    var hospitalID = id,
         hospitalURL = 'http://83.212.98.164:3000/hospitals/' + hospitalID,
         hospitalName = faker.company.companyName();
 

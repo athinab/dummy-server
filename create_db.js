@@ -1,4 +1,6 @@
 var faker = require('faker');
+var bdrCities = require('./bdrCities');
+var bdrRegions = require('./bdrRegions');
 
 function generateDB () {
   var donations = [],
@@ -16,17 +18,18 @@ function generateDB () {
       ],
       municipalities = [];
 
+  function parseCities(cities) {
+    return cities.map(function(city) {
+      let regionID = city.prefecture.region.id;
+      delete city.prefecture;
+      Object.assign(city, {regionID: regionID});
+      return city;
+    });
+  };
+  var municipalities = parseCities(bdrCities);
   for (var i = 0; i < 50; i++) {
     var id = i * 100 + 11;
 
-    var municipalityName = faker.address.city(),
-        municipalityID = id,
-        regionID = Math.floor(Math.random() * 13) + 1;
-    var municipality = {
-        name: municipalityName,
-        id: municipalityID,
-        region_id: regionID
-    };
 
     var donatedAt = faker.date.past(10).toISOString().slice(0, 10),
     // var donatedAt = "lalalallalalala".slice(0,10),
@@ -77,7 +80,6 @@ function generateDB () {
     donations.push(donation);
     coverages.push(coverage);
     hospitals.push(hospital);
-    municipalities.push(municipality);
   };
 
 
@@ -91,74 +93,54 @@ function generateDB () {
   };
 
   var profile = {
-    id: 324156,
-    username: faker.internet.userName(),
-    lastName: faker.name.lastName(),
-    firstName: faker.name.firstName()
-  };
-
-  var regions = [
-    {
-      "id":1,
-      "name":"AN. MAKEDONIAS & THRAKIS"
-    },
-    {
-      "id":2,
-      "name":"KENTRIKIS MAKEDONIAS"
-    },
-    {
-      "id":3,
-      "name":"DYTIKIS MAKEDONIAS"
-    },
-    {
-      "id":4,
-      "name":"IPEIROU"
-    },
-    {
-      "id":5,
-      "name":"THESSALIAS"
-    },
-    {
-      "id":6,
-      "name":"IONION NISON"
-    },
-    {
-      "id":7,
-      "name":"DYTIKIS ELLADAS"
-    },
-    {
-      "id":8,
-      "name":"STEREAS ELLADAS"
-    },
-    {
-      "id":9,
-      "name":"ATTIKIS"
-    },
-    {
-      "id":10,
-      "name":"PELOPONNISOU"
-    },
-    {
-      "id":11,
-      "name":"VOREIOU AIGAIOU"
-    },
-    {
-      "id":12,
-      "name":"NOTIOU AIGAIOU"
-    },
-    {
-      "id":13,
-      "name":"KRITIS"
-    }
-  ];
+    "aka": "311712793038",
+    "akaStatus": "APPROVED",
+    "ama": "1550793035",
+    "amka": "22012602054",
+    "birthCountry": "ΕΛΛΑΔΑ",
+    "birthDate": "1986-02-22",
+    "birthRegion": "ΑΝ. ΜΑΚΕΔΟΝΙΑΣ & ΘΡΑΚΗΣ",
+    "bloodGroup": "Α2",
+    "cellNumber": "6971231234",
+    "education": "LEVEL7",
+    "municipality": bdrCities[100],
+    "emailValid": true,
+    "email": "john@example.com",
+    "fatherName": "ΓΕΩΡΓΙΟΣ",
+    "firstName": "ΙΩΑΝΝΗΣ",
+    "gender": "MALE",
+    "id": 12345,
+    "identityDocuments": [{
+      "type": "ast",
+      "number": "ΑΧ 2134",
+      "issueCountry": "ΕΛΛΑΔΑ"
+    }, {
+      "type": "amka",
+      "number": "akma for the win",
+      "issueCountry": "ΕΛΛΑΔΑ"
+    }],
+    "lastName": "ΝΤΟΠΟΥΛΟΣ",
+    "majorBloodGroup": "A",
+    "motherName": "ΑΝΝΑ",
+    "phoneNumber": "2103217123",
+    "region": bdrRegions[4],
+    "rhesus": "POSITIVE",
+    "smsValid": true,
+    "status": "ACTIVE",
+    "street": "ΜΠΟΥΜΠΟΥΛΙΝΑΣ",
+    "streetNumber": "10",
+    "type": "BloodDonorUser",
+    "username": "johnny",
+    "zipcode": "14440"
+  }
 
   return {
     "donations": donations,
-    "profile": profile,
+    "users": [profile],
     "hospitals": hospitals,
     "coverages": coverages,
     "config": config,
-    "regions": regions,
+    "regions": bdrRegions,
     "municipalities": municipalities
   };
 };

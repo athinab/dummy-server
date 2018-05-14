@@ -88,8 +88,20 @@ function generateDB () {
       captcha: 'https://service.bdr.gr/blood-donor-registry-web/rest/captcha',
       contact: 'https://service.bdr.gr/blood-donor-registry-web/rest/helpdeskissue',
       donations: 'http://83.212.98.164:3000/donations',
-      coverages: 'http://83.212.98.164:3000/donations'
+      coverages: 'http://83.212.98.164:3000/donations',
+      nextDonation: 'http://83.212.98.164:3000/nextdonation',
+      alert: 'http://83.212.98.164:3000/alert',
     }
+  };
+
+  var alert = {
+    status: "ACTIVE",
+    email: "john@example.org",
+    // mobile: "6957373291",
+  };
+
+  var nextDonation =  {
+    donateAfter: "2018-01-04T22:00:00.000+0000",
   };
 
   var profile = {
@@ -141,7 +153,9 @@ function generateDB () {
     "coverages": coverages,
     "config": config,
     "regions": bdrRegions,
-    "municipalities": municipalities
+    "municipalities": municipalities,
+    "alert": alert,
+    "nextDonation": nextDonation,
   };
 };
 

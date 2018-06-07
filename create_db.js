@@ -125,12 +125,12 @@ function generateDB () {
 
   var alert = {
     status: "ACTIVE",
-    email: "john@example.org",
-    // mobile: "6957373291",
+    // email: "john@example.org",
+    mobile: "6957373291",
   };
 
   var nextDonation =  {
-    donateAfter: "2018-01-04T22:00:00.000+0000",
+    donateAfter: "2018-01-04",
   };
 
   var profile = {
@@ -140,10 +140,10 @@ function generateDB () {
     "amka": "22012602054",
     "birthCountry": "ΕΛΛΑΔΑ",
     "birthDate": "1986-02-22",
-    "birthRegion": "ΑΝ. ΜΑΚΕΔΟΝΙΑΣ & ΘΡΑΚΗΣ",
+    // "birthRegion": "ΑΝ. ΜΑΚΕΔΟΝΙΑΣ & ΘΡΑΚΗΣ",
     "bloodGroup": "Α2",
     "cellNumber": "6971231234",
-    "education": "LEVEL7",
+    // "education": "LEVEL7",
     "municipality": bdrCities[100],
     "emailValid": true,
     "email": "john@example.com",
@@ -168,12 +168,13 @@ function generateDB () {
     "rhesus": "POSITIVE",
     "smsValid": true,
     "status": "ACTIVE",
-    "street": "ΜΠΟΥΜΠΟΥΛΙΝΑΣ",
+    // "street": "ΜΠΟΥΜΠΟΥΛΙΝΑΣ",
     "streetNumber": "10",
     "type": "BloodDonorUser",
     "username": "johnny",
     "zipcode": "14440"
-  }
+  };
+
 
   return {
     "donations": donations,

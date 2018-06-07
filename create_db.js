@@ -16,6 +16,18 @@ function generateDB () {
         'Blood',
         'Platelets'
       ],
+      donorCardStatuses = [
+        'PENDING',
+        'SUBMITTED',
+        'APPROVED',
+        'SENT',
+        'READY',
+        'DELIVERED',
+        'LOST',
+        'REJECTED',
+        'CANCELLED',
+      ],
+      donorCards = [],
       municipalities = [];
 
   function parseCities(cities) {
@@ -37,8 +49,14 @@ function generateDB () {
         donationType = donationTypes[donationIndex],
         donationID = id * 13,
         coverageID = id * 7,
-        collectedComponent = collectedComponents[Math.floor(Math.random() * 2)];
+        collectedComponent = collectedComponents[Math.floor(Math.random() * 2)],
         // collectedComponent = collectedComponents[0];
+        donorCardIndex = Math.floor(Math.random() * 9),
+        donorCardStatus = donorCardStatuses[donorCardIndex],
+        donorCardID = id *3,
+        donorCardRejectionReason = (donorCardStatus == 'REJECTED' ? faker.hacker.phrase() : undefined ),
+        aka = faker.finance.account(12),
+        donorCardSubmittedAt;
 
     var date = new Date(donatedAt);
     var dd = date.getDate();
@@ -53,6 +71,7 @@ function generateDB () {
     }
 
     donatedAt = dd+'/'+mm+'/'+yyyy;
+    donorCardSubmittedAt = (donorCardStatus != 'PENDING' ? donatedAt : undefined);
     var hospitalID = id,
         hospitalURL = 'http://83.212.98.164:3000/hospitals/' + hospitalID,
         hospitalName = faker.company.companyName();
@@ -77,9 +96,18 @@ function generateDB () {
       "hospitalName": hospitalName,
     };
 
+    var donorCard = {
+      "id": donorCardID,
+      "status": donorCardStatus,
+      "rejectionReason": donorCardRejectionReason,
+      "submittedAt": donorCardSubmittedAt,
+      "aka": aka,
+    };
+
     donations.push(donation);
     coverages.push(coverage);
     hospitals.push(hospital);
+    donorCards.push(donorCard);
   };
 
 
@@ -91,6 +119,7 @@ function generateDB () {
       coverages: 'http://83.212.98.164:3000/donations',
       nextDonation: 'http://83.212.98.164:3000/nextdonation',
       alert: 'http://83.212.98.164:3000/alert',
+      donorCards: 'http://83.212.98.164:3000/donorcards',
     }
   };
 
@@ -156,6 +185,7 @@ function generateDB () {
     "municipalities": municipalities,
     "alert": alert,
     "nextDonation": nextDonation,
+    "donorCards": donorCards,
   };
 };
 

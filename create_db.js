@@ -1,6 +1,7 @@
 var faker = require('faker');
 var bdrCities = require('./bdrCities');
 var bdrRegions = require('./bdrRegions');
+var photo = require('./bdrPhoto');
 
 function generateDB () {
   var donations = [],
@@ -49,14 +50,8 @@ function generateDB () {
         donationType = donationTypes[donationIndex],
         donationID = id * 13,
         coverageID = id * 7,
-        collectedComponent = collectedComponents[Math.floor(Math.random() * 2)],
+        collectedComponent = collectedComponents[Math.floor(Math.random() * 2)];
         // collectedComponent = collectedComponents[0];
-        donorCardIndex = Math.floor(Math.random() * 9),
-        donorCardStatus = donorCardStatuses[donorCardIndex],
-        donorCardID = id *3,
-        donorCardRejectionReason = (donorCardStatus == 'REJECTED' ? faker.hacker.phrase() : undefined ),
-        aka = faker.finance.account(12),
-        donorCardSubmittedAt;
 
     var date = new Date(donatedAt);
     var dd = date.getDate();
@@ -71,7 +66,6 @@ function generateDB () {
     }
 
     donatedAt = dd+'/'+mm+'/'+yyyy;
-    donorCardSubmittedAt = (donorCardStatus != 'PENDING' ? donatedAt : undefined);
     var hospitalID = id,
         hospitalURL = 'http://83.212.98.164:3000/hospitals/' + hospitalID,
         hospitalName = faker.company.companyName();
@@ -96,20 +90,93 @@ function generateDB () {
       "hospitalName": hospitalName,
     };
 
-    var donorCard = {
-      "id": donorCardID,
-      "status": donorCardStatus,
-      "rejectionReason": donorCardRejectionReason,
-      "submittedAt": donorCardSubmittedAt,
-      "aka": aka,
-    };
 
     donations.push(donation);
     coverages.push(coverage);
     hospitals.push(hospital);
-    donorCards.push(donorCard);
   };
 
+  var donorCardID = 127826;
+  var tmpNum = 10
+  for(var status in donorCardStatuses) {
+    var donorCardStatus = donorCardStatuses[status];
+    var donorCardRejectionReason = (donorCardStatus == 'REJECTED' ? faker.hacker.phrase() : undefined ),
+    aka = faker.finance.account(12),
+    id = donorCardID,
+    tmpNum = tmpNum + 1,
+    submittedAt= '12/12/'+ tmpNum,
+    donorCardID = donorCardID + 133,
+    donorCardSubmittedAt = (donorCardStatus != 'PENDING' ? submittedAt : undefined),
+    distributionCenterData = {
+        "id": (id - 100077),
+        "title": faker.company.companyName(),
+        "email": faker.internet.email(),
+        "street": 'ΠΑΡΟΔΟΣ ΕΛ. ΒΕΝΙΖΕΛΟΥ',
+        "streetNumber": 4,
+        "zipcode": 64200,
+        "municipality": bdrCities[11],
+        "region": bdrRegions[0],
+        "visitingHours": "Δευτέρα,Τετάρτη: 09:00-16:00, Τρίτη,Πέμπτη,Παρασκευή: 09:00-21:00, Σάββατο: 09:00-15:00", // TODO: can we form this str?
+        "phoneNumber": "2103217123",
+    },
+    distributionCenter = (donorCardStatus === 'PENDING') ? undefined : distributionCenterData;
+
+    var donorCard = {
+      "id": id,
+      "status": donorCardStatuses[status],
+      "rejectionReason": donorCardRejectionReason,
+      "submittedAt": donorCardSubmittedAt,
+      "aka": aka,
+      "photo": photo,
+      // "email": "john@example.com",
+      "cellNumber": "6971231234",
+      "motherName": "ΑΝΝΑ",
+      "motherNameLatin": "ANNA",
+      "fatherName": "ΓΕΩΡΓΙΟΣ",
+      "fatherNameLatin": "GEORGIOS",
+      "firstName": "ΙΩΑΝΝΗΣ",
+      "firstNameLatin": "IOANNIS",
+      "lastName": "ΝΤΟΠΟΥΛΟΣ",
+      "lastNameLatin": "DOPOULOS",
+      "rhesus": "POSITIVE",
+      "majorBloodGroup": "A",
+      "distributionCenter": distributionCenter
+
+    };
+    donorCards.push(donorCard);
+  }
+    var donorCardExtra = {
+      "id": 987899,
+      "status": "PENDING",
+      "submittedAt": '15/10/02',
+      "aka": 12345566666,
+      "photo": "photo",
+      "email": "john@example.com",
+      "motherName": "ΑΝΝΑ",
+      "motherNameLatin": "ANNA",
+      "fatherName": "ΓΕΩΡΓΙΟΣ",
+      "fatherNameLatin": "GEORGIOS",
+      "firstName": "ΙΩΑΝΝΗΣ",
+      "firstNameLatin": "IOANNIS",
+      "lastName": "ΝΤΟΠΟΥΛΟΣ",
+      "lastNameLatin": "DOPOULOS",
+      "rhesus": "POSITIVE",
+      "majorBloodGroup": "A",
+      "distributionCenter": {
+        "id": 100987,
+        "title": faker.company.companyName(),
+        "email": faker.internet.email(),
+        "street": 'ΠΑΡΟΔΟΣ ΕΛ. ΒΕΝΙΖΕΛΟΥ',
+        "streetNumber": 4,
+        "zipcode": 64200,
+        "municipality": bdrCities[11],
+        "region": bdrRegions[0],
+        "visitingHours": "Δευτέρα,Τετάρτη: 09:00-16:00, Τρίτη,Πέμπτη,Παρασκευή: 09:00-21:00, Σάββατο: 09:00-15:00", // TODO: can we form this str?
+        "phoneNumber": "2103217123",
+      }
+    };
+
+  donorCards.push(donorCardExtra);
 
   var config = {
     endpoints: {

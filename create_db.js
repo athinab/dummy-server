@@ -29,6 +29,7 @@ function generateDB () {
         'CANCELLED',
       ],
       donorCards = [],
+      oldDonations = [],
       municipalities = [];
 
   function parseCities(cities) {
@@ -49,6 +50,7 @@ function generateDB () {
         donationIndex = Math.floor(Math.random() * 4),
         donationType = donationTypes[donationIndex],
         donationID = id * 13,
+        oldDonationID = id * 23,
         coverageID = id * 7,
         collectedComponent = collectedComponents[Math.floor(Math.random() * 2)];
         // collectedComponent = collectedComponents[0];
@@ -57,6 +59,7 @@ function generateDB () {
     var dd = date.getDate();
     var mm = date.getMonth()+1;
     var yyyy = date.getFullYear();
+
 
     if(dd<10){
         dd='0'+dd;
@@ -90,10 +93,26 @@ function generateDB () {
       "hospitalName": hospitalName,
     };
 
+    // I want a lot of zeros
+    var countVol = Math.floor(Math.random()*2) ? Math.floor(Math.random()*10) : 0,
+        countPat = Math.floor(Math.random()*2) ? Math.floor(Math.random()*10) : 0,
+        countCov = Math.floor(Math.random()*2) ? Math.floor(Math.random()*10) : 0,
+        countBda = Math.floor(Math.random()*2) ? Math.floor(Math.random()*10) : 0,
+        association = countBda ? faker.company.companyName() : undefined;
+    var oldDonation = {
+      "id": oldDonationID,
+      "hospitalName": hospitalName,
+      "volunteerDonations": countVol,
+      "patientDonations": countPat,
+      "coverages": countCov,
+      "bdaDonations": countBda,
+      associationName: association,
+    };
 
     donations.push(donation);
     coverages.push(coverage);
     hospitals.push(hospital);
+    oldDonations.push(oldDonation);
   };
 
   var donorCardID = 127826;
@@ -254,6 +273,7 @@ function generateDB () {
     "alert": alert,
     "nextDonation": nextDonation,
     "donorCards": donorCards,
+    "oldDonations": oldDonations,
   };
 };
 

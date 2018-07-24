@@ -98,6 +98,7 @@ function generateDB () {
         countPat = Math.floor(Math.random()*2) ? Math.floor(Math.random()*10) : 0,
         countCov = Math.floor(Math.random()*2) ? Math.floor(Math.random()*10) : 0,
         countBda = Math.floor(Math.random()*2) ? Math.floor(Math.random()*10) : 0,
+        ama = Math.floor(Math.random()*2) ? 1550793035 : undefined,
         association = countBda ? faker.company.companyName() : undefined;
     var oldDonation = {
       "id": oldDonationID,
@@ -105,8 +106,9 @@ function generateDB () {
       "volunteerDonations": countVol,
       "patientDonations": countPat,
       "coverages": countCov,
-      "bdaDonations": countBda,
-      associationName: association,
+      "associationDonations": countBda,
+      "associationName": association,
+      "ama": ama,
     };
 
     donations.push(donation);
